@@ -11,7 +11,7 @@ roles_dict = {
     "joker": 1,
     "barman": 1,
     "detective": 2,
-    "civilian": 4,
+    "civilian": 5,
     "clueful_doctor": 1,
     "clueless_doctor": 1,
     "dead": 0
