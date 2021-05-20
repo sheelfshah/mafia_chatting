@@ -6,7 +6,7 @@ import random
 
 roles_dict = {
     "god": 1,
-    "mafia": 3,
+    "mafia": 4,
     "bomber": 1,
     "joker": 1,
     "barman": 1,
