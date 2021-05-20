@@ -6,12 +6,12 @@ import random
 
 roles_dict = {
     "god": 1,
-    "mafia": 1,
+    "mafia": 3,
     "bomber": 1,
     "joker": 1,
     "barman": 1,
-    "detective": 1,
-    "civilian": 2,
+    "detective": 2,
+    "civilian": 4,
     "clueful_doctor": 1,
     "clueless_doctor": 1,
     "dead": 0
@@ -51,6 +51,7 @@ def get_random_role():
     try:
         return roles[role_index - 1]
     except:
+        role_index -= 1
         return "dead"
 
 
