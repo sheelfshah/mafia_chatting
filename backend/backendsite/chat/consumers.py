@@ -6,25 +6,33 @@ import random
 
 roles_dict = {
     "god": 1,
-    "mafia": 2,
+    "mafia": 1,
+    # "bomber": 1,
+    # "joker": 1,
     "detective": 1,
-    "civilian": 1
+    "civilian": 2,
+    "clueful_doctor": 1,
+    # "clueless_doctor": 1,
+    "dead": 0
 }
 
 room_group_names_dict = {
     "god": None,
     "mafia": None,
     "detective": None,
-    "civilian": None
+    "civilian": None,
+    "dead": None
 }
 
 roles_room_codes = {
     "mafia": None,
     "detective": None,
     "god": None,
+    "dead": None
 }
 
-roomless_roles = ["civilian"]
+roomless_roles = ["bomber", "joker", "civilian",
+                  "clueful_doctor", "clueless_doctor"]
 
 role_index = 0
 roles = []
@@ -38,7 +46,10 @@ def get_random_role():
     global role_index, roles
 
     role_index += 1
-    return roles[role_index - 1]
+    try:
+        return roles[role_index - 1]
+    except:
+        return "dead"
 
 
 def get_room_name(role):
@@ -77,11 +88,14 @@ class ChatConsumer(WebsocketConsumer):
         }))
 
     def disconnect(self, close_code):
+        global roles
+
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
             self.room_group_name,
             self.channel_name
         )
+        roles.append(self.role)
 
     # Receive message from WebSocket
     def receive(self, text_data):
@@ -134,8 +148,13 @@ class ChatConsumer(WebsocketConsumer):
                         }
                     )
                     if message[:4] == "dead":
-                        self.role = "god"
-                        self.room_group_name = room_group_names_dict["god"]
+                        async_to_sync(self.channel_layer.group_discard)(
+                            self.room_group_name,
+                            self.channel_name
+                        )
+                        self.role = "dead"
+                        self.room_group_name = get_room_name(self.role)
+                        room_group_names_dict[self.role] = self.room_group_name
                         async_to_sync(self.channel_layer.group_add)(
                             self.room_group_name,
                             self.channel_name
@@ -167,8 +186,13 @@ class ChatConsumer(WebsocketConsumer):
                     }
                 )
                 if message[:4] == "dead":
-                    self.role = "god"
-                    self.room_group_name = room_group_names_dict["god"]
+                    async_to_sync(self.channel_layer.group_discard)(
+                        self.room_group_name,
+                        self.channel_name
+                    )
+                    self.role = "dead"
+                    self.room_group_name = get_room_name(self.role)
+                    room_group_names_dict[self.role] = self.room_group_name
                     async_to_sync(self.channel_layer.group_add)(
                         self.room_group_name,
                         self.channel_name
