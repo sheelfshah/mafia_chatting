@@ -8,7 +8,6 @@ setup:
 3. install docker
 4. use the command in beckend/notes.txt to run redis
 5. then run the command to start a server
-
 6. in case you want to deploy, either port forward, or use a VM, with daphne/django-default-server for hosting
 
 usage:

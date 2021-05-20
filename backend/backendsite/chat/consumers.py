@@ -7,20 +7,22 @@ import random
 roles_dict = {
     "god": 1,
     "mafia": 1,
-    # "bomber": 1,
-    # "joker": 1,
+    "bomber": 1,
+    "joker": 1,
+    "barman": 1,
     "detective": 1,
     "civilian": 2,
     "clueful_doctor": 1,
-    # "clueless_doctor": 1,
+    "clueless_doctor": 1,
     "dead": 0
 }
 
 room_group_names_dict = {
     "god": None,
-    "mafia": None,
-    "detective": None,
+    "mafia": None, "detective": None,
     "civilian": None,
+    "bomber": None, "joker": None, "barman": None,
+    "clueless_doctor": None, "clueful_doctor": None,
     "dead": None
 }
 
@@ -31,7 +33,7 @@ roles_room_codes = {
     "dead": None
 }
 
-roomless_roles = ["bomber", "joker", "civilian",
+roomless_roles = ["bomber", "joker", "barman", "civilian",
                   "clueful_doctor", "clueless_doctor"]
 
 role_index = 0
