@@ -1,4 +1,4 @@
 venv name: venv_scot
 run redis: docker run -p 6379:6379 -d redis:5 
-run server: py manage.py runserver 
-192.168.0.150:8000
+run server: python3 manage.py runserver 
+0.0.0.0:8000
